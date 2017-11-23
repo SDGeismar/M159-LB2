@@ -12,6 +12,7 @@ Rename-Computer -NewName vmWS2-vk
 Write-Host "Check Timezone"
 Get-TimeZone
 # Set IP - To be fixed
+# Currently sets netmask with 32 bits (255.255.255.255)
 Remove-NetIPAddress -InterfaceIndex $NetAdapter.InterfaceIndex -IPAddress *
 New-NetIPAddress -InterfaceIndex $NetAdapter.InterfaceIndex -IPAddress 192.168.210.104
 # Disable all Firewall profiles
