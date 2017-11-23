@@ -1,0 +1,11 @@
+Name;Path
+Company;DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Management;OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+EDV;OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Produktion;OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Thun;OU=Management,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Bern;OU=Management,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Thun;OU=EDV,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Bern;OU=EDV,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Thun;OU=Produktion,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Bern;OU=Produktion,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
