@@ -1,0 +1,7 @@
+Name;GivenName;Surname;SamAccountName;UserPrincipalName;Path
+Manager1;Manager;1;man1;man1@thun.ads.m159.iet-gibb.ch;OU=Thun,OU=Management,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Manager2;Manager;2;man2;man2@bern.ads.m159.iet-gibb.ch;OU=Bern,OU=Management,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Tech1;Tech;1;edv1;edv1@thun.ads.m159.iet-gibb.ch;OU=Thun,OU=EDV,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Tech2;Tech;2;edv2;edv2@bern.ads.m159.iet-gibb.ch;OU=Bern,OU=EDV,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Labourer1;Labourer;1;prod1;prod1@thun.ads.m159.iet-gibb.ch;OU=Thun,OU=Produktion,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
+Labourer2;Labourer;2;prod2;prod2@bern.ads.m159.iet-gibb.ch;OU=Bern,OU=Produktion,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch
