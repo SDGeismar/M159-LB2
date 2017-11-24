@@ -41,7 +41,9 @@ New-GPLink -Name "Desktop_Remove" -Target "OU=Company,DC=ADS,DC=M159,DC=iet-gibb
 # Disable password complexity
 Set-ADDefaultDomainPasswordPolicy -ComplexityEnabled $false -Identity ADS.M159.iet-gibb.ch
 
-192.168.210.0/25
+# Sites
+# Rename current site to Bern
+Get-ADObject -SearchBase (Get-ADRootDSE).ConfigurationNamingContext -filter "objectclass -eq 'site'" | Rename-ADObject -NewName Bern
 
-
-gpupdate /force
+# Create new site and configure it
+New-ADReplicationSite -Name Thun
