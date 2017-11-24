@@ -25,11 +25,11 @@ For those lazy people that rather browse reddit during class than do any product
 ```
 
 ### Credentials
-User syntax:
+Users:
 ```
-Management:   manX
-EDV:          techX
-Produktion:   prodX
+Management:   Mx
+EDV:          Ex
+Produktion:   Px
 
 Password:     asdf1234
 (Applicable to all users)
