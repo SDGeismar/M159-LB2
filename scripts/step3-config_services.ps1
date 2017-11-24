@@ -34,9 +34,10 @@ Add-DnsServerResourceRecordA -Name "vmWP1" -ZoneName "ADS.M159.iet-gibb.ch" -All
 
 # GPOs
 # Disable recycle bin on desktop
-New-GPO -Name "Desktop_Remove" -comment "Omit recylce bin icon on desktop"
+New-GPO -Name "Desktop_Remove" -comment "Omit recylce bin icon from desktop"
 Set-GPRegistryValue -Name "Desktop_Remove" -key $binreg -ValueName "{645FF040-5081-101B-9F08-00AA002F954E}" -Type String -value 1
 New-GPLink -Name "Desktop_Remove" -Target "OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch"
+
 # Disable password complexity
 Set-ADDefaultDomainPasswordPolicy -ComplexityEnabled $false -Identity ADS.M159.iet-gibb.ch
 
