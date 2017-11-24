@@ -1,6 +1,6 @@
 # ------------------------------------------------
-# Step 3: Post ADDS-deployment configuration
-# Author: Valentin Klopfenstein, (c) 2017, IT-GIBB
+# Post ADDS-deployment configuration
+# This script configures DHCP, OUs, DNS and all that crap
 
 Import-Module ActiveDirectory 
 
@@ -24,7 +24,7 @@ import-csv ou.csv -delimiter ";"| New-ADOrganizationalUnit -PassThru
 echo "Now setting up security groups"
 New-ADGroup -Name "M" -SamAccountName M -GroupCategory Security -GroupScope Global -DisplayName "Management" -Path "OU=Management,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch" -Description "Management"  
 New-ADGroup -Name "E" -SamAccountName E -GroupCategory Security -GroupScope Global -DisplayName "EDV" -Path "OU=EDV,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch" -Description "EDV"  
-New-ADGroup -Name "P" -SamAccountName P -GroupCategory Security -GroupScope Global -DisplayName "Production" -Path "OU=Production,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch" -Description "Production"  
+New-ADGroup -Name "P" -SamAccountName P -GroupCategory Security -GroupScope Global -DisplayName "Production" -Path "OU=Produktion,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch" -Description "Production"  
 echo "Now setting up Users"
 Import-Csv users.csv -delimiter ";" | New-ADUser -PassThru | Set-ADAccountPassword -Reset -NewPassword (ConvertTo-SecureString -AsPlainText ‘asdf1234’ -Force) -PassThru | Enable-ADAccount
 
