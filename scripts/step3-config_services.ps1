@@ -41,4 +41,7 @@ New-GPLink -Name "Desktop_Remove" -Target "OU=Company,DC=ADS,DC=M159,DC=iet-gibb
 # Disable password complexity
 Set-ADDefaultDomainPasswordPolicy -ComplexityEnabled $false -Identity ADS.M159.iet-gibb.ch
 
+192.168.210.0/25
+
+
 gpupdate /force
