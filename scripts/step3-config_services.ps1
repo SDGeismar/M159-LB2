@@ -1,3 +1,4 @@
+# ------------------------------------------------
 # Post ADDS-deployment configuration
 # This script configures DHCP, OUs, DNS and all that crap
 
