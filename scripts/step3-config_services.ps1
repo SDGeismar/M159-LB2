@@ -6,6 +6,7 @@ Import-Module ActiveDirectory
 
 $dc = hostname
 $ip = Test-Connection -ComputerName (hostname) -Count 1  | Select -ExpandProperty IPV4Address
+$binreg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum"
 
 # DHCP config
 echo " "
@@ -28,3 +29,9 @@ echo "Now setting up DNS"
 Add-DnsServerResourceRecordA -Name "vmWp1" -ZoneName "ADS.local" -AllowUpdateAny -IPv4Address "192.168.210.10" -TimeToLive 01:00:00
 
 # GPOs
+# Disable recycle bin on desktop
+New-GPO -Name "Desktop_Remove" -comment "Omit recylce bin icon on desktop"
+Set-GPRegistryValue -Name "Desktop_Remove" -key $binreg -ValueName {645FF040-5081-101B-9F08-00AA002F954E} -Type String -value 1
+New-GPLink -Name "Desktop_Remove" -Target OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=dc
+
+gpupdate /force
