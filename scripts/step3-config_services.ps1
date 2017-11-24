@@ -1,6 +1,6 @@
 # ------------------------------------------------
-# Post ADDS-deployment configuration
-# This script configures DHCP, OUs, DNS and all that crap
+# Step 3: Post ADDS-deployment configuration
+# Author: Valentin Klopfenstein, (c) 2017, IT-GIBB
 
 Import-Module ActiveDirectory 
 
