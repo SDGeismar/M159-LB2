@@ -6,7 +6,7 @@ Import-Module ActiveDirectory
 
 $dc = hostname
 $ip = Test-Connection -ComputerName (hostname) -Count 1  | Select -ExpandProperty IPV4Address
-$binreg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum"
+$binreg = "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum"
 
 # DHCP config
 echo " "
@@ -20,23 +20,23 @@ echo " "
 
 # OUs
 echo "Now setting up OUs"
-import-csv ou.csv -delimiter ";"| New-ADOrganizationalUnit
+import-csv ou.csv -delimiter ";"| New-ADOrganizationalUnit -PassThru
 echo "Now setting up security groups"
-New-ADGroup -Name "M" -SamAccountName M -GroupCategory Security -GroupScope Global -DisplayName "Management" -Path "OU=Management,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=dc" -Description "Management"  
-New-ADGroup -Name "E" -SamAccountName E -GroupCategory Security -GroupScope Global -DisplayName "EDV" -Path "OU=EDV,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=dc" -Description "EDV"  
-New-ADGroup -Name "P" -SamAccountName P -GroupCategory Security -GroupScope Global -DisplayName "Production" -Path "OU=Production,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=dc" -Description "Production"  
+New-ADGroup -Name "M" -SamAccountName M -GroupCategory Security -GroupScope Global -DisplayName "Management" -Path "OU=Management,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch" -Description "Management"  
+New-ADGroup -Name "E" -SamAccountName E -GroupCategory Security -GroupScope Global -DisplayName "EDV" -Path "OU=EDV,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch" -Description "EDV"  
+New-ADGroup -Name "P" -SamAccountName P -GroupCategory Security -GroupScope Global -DisplayName "Production" -Path "OU=Production,OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch" -Description "Production"  
 echo "Now setting up Users"
 Import-Csv users.csv -delimiter ";" | New-ADUser -PassThru | Set-ADAccountPassword -Reset -NewPassword (ConvertTo-SecureString -AsPlainText ‘asdf1234’ -Force) -PassThru | Enable-ADAccount
 
 # DNS
 echo "Now setting up DNS"
-Add-DnsServerResourceRecordA -Name "vmWp1" -ZoneName "ADS.local" -AllowUpdateAny -IPv4Address "192.168.210.10" -TimeToLive 01:00:00
+Add-DnsServerResourceRecordA -Name "vmWP1" -ZoneName "ADS.M159.iet-gibb.ch" -AllowUpdateAny -IPv4Address "192.168.210.10" -TimeToLive 01:00:00
 
 # GPOs
 # Disable recycle bin on desktop
 New-GPO -Name "Desktop_Remove" -comment "Omit recylce bin icon on desktop"
-Set-GPRegistryValue -Name "Desktop_Remove" -key $binreg -ValueName {645FF040-5081-101B-9F08-00AA002F954E} -Type String -value 1
-New-GPLink -Name "Desktop_Remove" -Target OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=dc
+Set-GPRegistryValue -Name "Desktop_Remove" -key $binreg -ValueName "{645FF040-5081-101B-9F08-00AA002F954E}" -Type String -value 1
+New-GPLink -Name "Desktop_Remove" -Target "OU=Company,DC=ADS,DC=M159,DC=iet-gibb,DC=ch"
 # Disable password complexity
 Set-ADDefaultDomainPasswordPolicy -ComplexityEnabled $false -Identity ADS.M159.iet-gibb.ch
 
