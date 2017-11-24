@@ -22,3 +22,9 @@ echo "Now setting up OUs"
 import-csv ou.csv -delimiter ";"| New-ADOrganizationalUnit –PassThru
 echo "Now setting up Users"
 Import-Csv users.csv -delimiter ";" | New-ADUser -PassThru | Set-ADAccountPassword -Reset -NewPassword (ConvertTo-SecureString -AsPlainText ‘asdf1234’ -Force) -PassThru | Enable-ADAccount
+
+# DNS
+echo "Now setting up DNS"
+Add-DnsServerResourceRecordA -Name "vmWp1" -ZoneName "ADS.local" -AllowUpdateAny -IPv4Address "192.168.210.10" -TimeToLive 01:00:00
+
+# GPOs
