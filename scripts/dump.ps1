@@ -1,5 +1,5 @@
-# This file just contains some PS commands.
-# other than that, it serves no purpose.
+# This file simply contains random PS commands.
+# It serves no purpose whatsoever.
 
 Get-ADObject -SearchBase (Get-ADRootDSE).ConfigurationNamingContext -filter "objectclass -eq 'site'" | Rename-ADObject -NewName Thun
 
