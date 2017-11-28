@@ -1,5 +1,5 @@
 # This file just contains some PS commands.
-# The script itself serves no purpse
+# other than that, it serves no purpose.
 
 Get-ADObject -SearchBase (Get-ADRootDSE).ConfigurationNamingContext -filter "objectclass -eq 'site'" | Rename-ADObject -NewName Thun
 
