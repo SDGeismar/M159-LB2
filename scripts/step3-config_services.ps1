@@ -47,12 +47,20 @@ Get-ADObject -SearchBase (Get-ADRootDSE).ConfigurationNamingContext -filter "obj
 
 # Create new site and configure it
 New-ADReplicationSite -Name Thun
+# !!!!!!!!!!!!!!!!!!!!!!!!
+# TODO: Create and assign Subnet to Site "Bern" and "Thun"
+# !!!!!!!!!!!!!!!!!!!!!!!!
 
-# FSMO Management
+
+# !!!!!!!!!!!!!!!!!!!!!!!!
+# TODO: Define replica schedule of DEFAULTIPSITELINK
+# !!!!!!!!!!!!!!!!!!!!!!!!
+
+# FSMO Management - Enable "AD Schema" Snap-In
 # Register schmmgmt.dll
 regsvr32 schmmgmt.dll
 
-# Add Attribute in class "Person"
+# Create and assign attribute to class "Person"
 # Courtesy of https://blogs.technet.microsoft.com/heyscriptingguy/2015/06/17/powershell-and-the-active-directory-schema-part-2/
 $schemaPath = (Get-ADRootDSE).schemaNamingContext
 $oid = New-AttributeID
