@@ -48,9 +48,7 @@ echo "Ensure DNS is working!"
 
 pause
 
-#
 # AD DS Deployment Skreenkast
-#
 
 Import-Module ADDSDeployment
 Install-ADDSForest `
