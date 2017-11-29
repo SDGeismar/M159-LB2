@@ -1,25 +1,40 @@
+#requires ñrunasadministrator
 # ------------------------------------------
 # Step 2: Deploy AD
 # Author: VK (c) 2017
 
-echo "Will now install ADDS components"
+#Cmdlet binding if user wants Silent installation
+[CmdletBinding()]
+Param(
+        
+    [Parameter(Mandatory=$false,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+    [switch]$Silent         
+)
+$FolderPath = $PSScriptRoot
+#Start Logging
+Start-Transcript -Path "$FolderPath\Setup.log" -Append
+
+Write-Host "Will now install ADDS components"
 Install-windowsfeature -name AD-Domain-Services -IncludeManagementTools  
 
-echo "Will now init and format all 3 disks accordingly."
-echo "Ensure all 3 disks are connected, otherwise add them first."
+Write-Host "Will now init and format all 3 disks accordingly."
+Write-Host "Ensure all 3 disks are connected, otherwise add them first."
 
-pause
+if(!$Silent){
+    pause
+}
 
-mkdir C:\directory
-mkdir C:\protocol
+New-Item C:\directory -ItemType Directory
+New-Item C:\protocol -ItemType Directory
 
-echo "Will now change existing drive letter D:\ to E:\."
+Write-Host "Will now change existing drive letter D:\ to E:\."
 # Alter CD ROM drive letter
-Get-WmiObject -Class Win32_volume -Filter "DriveLetter = 'D:'" |Set-WmiInstance -Arguments @{DriveLetter='E:'}
+Get-WmiObject -Class Win32_volume -Filter "DriveLetter = 'D:'" |`    Set-WmiInstance -Arguments @{DriveLetter='E:'}
 
-echo "Will now set up all 3 disks."
+Write-Host "Will now set up all 3 disks."
 # Set up all disks
 # ja me ch√∂nnt das mitere for schleife mache abr ig bi zu faul
+
 $Disk = Get-Disk 1
 $Disk | Initialize-Disk -PartitionStyle MBR
 $Disk | New-Partition -UseMaximumSize -MbrType IFS
@@ -38,15 +53,27 @@ $Disk = Get-Disk 3
 $Disk | Initialize-Disk -PartitionStyle MBR
 $Disk | New-Partition -AssignDriveLetter -UseMaximumSize -MbrType IFS
 $Partition = Get-Partition -DiskNumber $Disk.Number
-$Partition | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Data" -Confirm:$false
+$Partition | Format-Volume -FileSystem NTFS `    -NewFileSystemLabel "Data" `    -Confirm:$false
 
-echo "Will now create sysvol dir on D:\"
-mkdir D:\sysvol
+Write-Host "Will now create sysvol dir on D:\"
+New-Item D:\sysvol -ItemType Directory
 
-echo "Alert! Domain setup will commence next!"
-echo "Ensure DNS is working!"
+Write-Warning "Alert! Domain setup will commence next!"
+Write-Warning "Ensure DNS is working!"
 
-pause
+if(!$silent)
+{
+    pause
+}
+
+if($Silent)
+{
+    #Setup Auto login
+    Push-Location $folderPath
+    . .\Set-AutoLogon.ps1
+    Set-Autologon -Script "$FolderPath\step3-config_services.ps1 -Silent"
+}
+
 
 #
 # AD DS Deployment Skreenkast
@@ -66,4 +93,6 @@ Install-ADDSForest `
 -SysvolPath "D:\sysvol" `
 -Force:$true
 
-echo "Domain setup has concluded!"
+Write-Host "Domain setup has concluded!"
+#Stop logging
+Stop-Transcript
