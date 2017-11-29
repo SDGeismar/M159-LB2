@@ -47,10 +47,10 @@ Get-ADObject -SearchBase (Get-ADRootDSE).ConfigurationNamingContext -filter "obj
 
 # Create new site and configure it
 New-ADReplicationSite -Name Thun
-# !!!!!!!!!!!!!!!!!!!!!!!!
-# TODO: Create and assign Subnet to Site "Bern" and "Thun"
-# !!!!!!!!!!!!!!!!!!!!!!!!
 
+# [!] UNTESTED [!]
+New-ADReplicationSubnet -Name "192.168.210.0/25" -Site Bern
+New-ADReplicationSubnet -Name "192.168.210.128/25" -Site Thun
 
 # !!!!!!!!!!!!!!!!!!!!!!!!
 # TODO: Define replica schedule of DEFAULTIPSITELINK
@@ -60,6 +60,7 @@ New-ADReplicationSite -Name Thun
 # Register schmmgmt.dll
 regsvr32 schmmgmt.dll
 
+# [!] UNTESTED [!]
 # Create and assign attribute to class "Person"
 # Courtesy of https://blogs.technet.microsoft.com/heyscriptingguy/2015/06/17/powershell-and-the-active-directory-schema-part-2/
 $schemaPath = (Get-ADRootDSE).schemaNamingContext
