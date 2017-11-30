@@ -75,9 +75,7 @@ if($Silent)
 }
 
 
-#
 # AD DS Deployment Skreenkast
-#
 
 Import-Module ADDSDeployment
 Install-ADDSForest `
